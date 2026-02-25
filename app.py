@@ -63,7 +63,7 @@ def get_video_transcript(youtube_url):
     try:
         # CORRECT ENDPOINT URL BELOW
         response = requests.get(
-            url='https://app.scrapingbee.com', 
+            url='https://app.scrapingbee.com/api/v1/youtube/transcript', 
             params={'api_key': SB_API_KEY, 'video_id': video_id}
         )
         
