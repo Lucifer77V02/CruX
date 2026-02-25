@@ -61,7 +61,7 @@ def get_video_transcript(youtube_url):
 
     try:
         # Fetching through the tunnel
-        transcript_list = YouTubeTranscriptApi.list(video_id, proxies=proxies)
+        transcript_list = YouTubeTranscriptApi.list(video_id)
         transcript = transcript_list.find_transcript(['en'])
         full_transcript = " ".join([chunk['text'] for chunk in transcript.fetch()])
         return full_transcript, None
@@ -70,7 +70,7 @@ def get_video_transcript(youtube_url):
 
 def generate_cheat_sheet(transcript, api_key):
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash') # Corrected model name
+    model = genai.GenerativeModel('gemini-2.5-flash') # Corrected model name
     prompt = f"Expert Professor: Create a Cheat Sheet from this transcript. Include Summary, Core Concepts, Key Terms, and a 5-question Practice Exam with Answer Key. \n\nTranscript: {transcript}"
     response = model.generate_content(prompt)
     return response.text
