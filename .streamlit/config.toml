@@ -1,0 +1,10 @@
+[theme]
+base = "light"
+primaryColor = "#FFB703"      # Your Golden-Yellow
+backgroundColor = "#E3F2FD"   # Light, welcoming Sky Blue
+secondaryBackgroundColor = "#FFFFFF" # Pure White boxes
+textColor = "#1A237E"         # Deep Indigo (for readability, not black)
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false

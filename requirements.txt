@@ -1,0 +1,6 @@
+streamlit
+youtube-transcript-api
+google-generativeai
+markdown-pdf
+streamlit-lottie
+requests
