@@ -61,7 +61,8 @@ def get_video_transcript(youtube_url):
 
     try:
         # Fetching through the tunnel
-        transcript_list = YouTubeTranscriptApi.list(video_id=video_id)
+        ytt_api = YouTubeTranscriptApi() 
+        transcript_list = ytt_api.list(video_id=video_id)
         transcript = transcript_list.find_transcript(['en'])
         full_transcript = " ".join([chunk['text'] for chunk in transcript.fetch()])
         return full_transcript, None
