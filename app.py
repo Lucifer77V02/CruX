@@ -71,7 +71,9 @@ def get_video_transcript(youtube_url):
                 'video_id': video_id,
                 'language': 'en',
                 'transcript_origin': 'auto_generated' ,
-                 'premium_proxy': 'true' 
+                'render_js': 'true',          # Required to see the transcript button
+                'premium_proxy': 'true',
+                'extract_rules': '{"transcript": "yt-formatted-string.ytd-transcript-segment-renderer"}'
             },
         )
         
