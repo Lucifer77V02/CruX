@@ -72,7 +72,6 @@ def get_video_transcript(youtube_url):
                 'language': 'en',
                 'transcript_origin': 'auto_generated' 
             },
-            timeout=100
         )
         
         if response.status_code == 200:
