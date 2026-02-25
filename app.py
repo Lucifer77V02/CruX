@@ -51,40 +51,34 @@ except KeyError:
 
 # --- 5. CORE LOGIC ---
 def get_video_transcript(youtube_url):
-    # 1. Extract Video ID from URL
     video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", youtube_url)
-    if not video_id_match:
-        return None, "Invalid YouTube URL."
+    if not video_id_match: return None, "Invalid YouTube URL."
     video_id = video_id_match.group(1)
     
-    # 2. ScrapingBee API Configuration
-    # Ensure you add 'SCRAPINGBEE_API_KEY' to your Streamlit secrets
     SB_API_KEY = st.secrets["SCRAPINGBEE_API_KEY"]
-    sb_url = 'https://app.scrapingbee.com'
     
     try:
-        # Request transcript from ScrapingBee's dedicated YouTube endpoint
         response = requests.get(
-            url=sb_url,
-            params={
-                'api_key': SB_API_KEY,
-                'video_id': video_id,
-                'language': 'en' # Optional: specify language
-            }
+            url='https://app.scrapingbee.com',
+            params={'api_key': SB_API_KEY, 'video_id': video_id}
         )
         
+        # 1. Check if the request was successful
         if response.status_code == 200:
+            # 2. Check if the response actually has content before parsing
+            if not response.text.strip():
+                return None, "API returned an empty response. (No transcript available?)"
+            
             data = response.json()
-            # ScrapingBee returns a list of dictionaries with 'text', 'start', and 'duration'
             full_transcript = " ".join([chunk['text'] for chunk in data])
             return full_transcript, None
-        elif response.status_code == 404:
-            return None, "Transcript not available for this video."
+            
         else:
-            return None, f"ScrapingBee Error: {response.status_code} - {response.text}"
+            # This identifies the real issue (e.g., 401 = Invalid Key, 402 = No Credits)
+            return None, f"ScrapingBee Error {response.status_code}: {response.text[:100]}"
             
     except Exception as e:
-        return None, f"Request failed: {str(e)}"
+        return None, f"Connection Error: {str(e)}"
 
 def generate_cheat_sheet(transcript, api_key):
     genai.configure(api_key=api_key)
