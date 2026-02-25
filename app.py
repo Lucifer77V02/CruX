@@ -70,9 +70,8 @@ def get_video_transcript(youtube_url):
                 'api_key': st.secrets["SCRAPINGBEE_API_KEY"],
                 'video_id': video_id,
                 'language': 'en',
-                'transcript_origin': 'auto_generated' ,
-                'render_js': 'true'       # Required to see the transcript button
-            },
+                'transcript_origin': 'auto_generated'    # Required to see the transcript button
+            }
         )
         
         if response.status_code == 200:
